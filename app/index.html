@@ -8,7 +8,7 @@
 
     <title>Trab1 Ger. Redes</title>
 
-    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cosmo/bootstrap.min.css">
 
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
@@ -17,10 +17,23 @@
     <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
     <script src="app.js"></script>
+    <script src="panel/panel.directive.js"></script>
 
 </head>
 <body ng-controller="AppController as app">
 
+<div class="container">
+
+    <div class="well">
+        <bootstrap-panel title="Dados" type="primary">
+            <span>Usuario: {{findValue(OIDS.USERNAME)}}</span>
+            <span>Localização: {{findValue(OIDS.LOCATION)}}</span>
+        </bootstrap-panel>
+    </div>
+
+
+
+</div>
 
 
 </body>

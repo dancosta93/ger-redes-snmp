@@ -9,7 +9,7 @@ var app = express();
 app.listen(8080);
 console.log("App listening on port 8080");
 
-app.get('/api/test', function (req, res) {
+app.get('/api/data', function (req, res) {
 
     var decoder = new StringDecoder('utf8');
 
@@ -22,13 +22,13 @@ app.get('/api/test', function (req, res) {
             console.log(err);
         }else{
             for (var i = 0; i < result.length; i++) {
-                if(result[i].type == 4){
+                if (result[i].type == 4) {
                     //octet string
                     result[i].value = decoder.write(result[i].value);
                 }
             }
-            res.json(result);
         }
+        res.json(result);
     });
 
 });
