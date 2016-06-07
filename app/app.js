@@ -15,12 +15,22 @@ angular.module('MyApp')
 
         $scope.findValue = findValue;
 
+        $scope.hostAddress = "127.0.0.1";
+
         $scope.OIDS = {
             USERNAME: '1.3.6.1.2.1.1.5.0',
             LOCATION: '1.3.6.1.2.1.1.6.0'
         };
 
         $scope.data = undefined;
+
+        $scope.connect = function () {
+            $http.post(URL + 'api/start', {hostAddress: $scope.hostAddress})
+                .then(function () {
+                    $scope.connected = true;
+                    init();
+                });
+        };
 
         function init() {
             $http.get(URL + "api/data")
@@ -38,6 +48,4 @@ angular.module('MyApp')
 
             return result.value;
         }
-
-        init();
     });

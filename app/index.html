@@ -8,7 +8,7 @@
 
     <title>Trab1 Ger. Redes</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
 
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
@@ -20,12 +20,18 @@
     <script src="panel/panel.directive.js"></script>
 
 </head>
-<body ng-controller="AppController as app">
+<body ng-controller="AppController as ctrl">
 
 <div class="container">
 
     <div class="well">
-        <bootstrap-panel title="Dados" type="primary">
+        <div ng-hide="connected">
+            <input type="text" ng-model="hostAddress"/>
+            <button ng-click="connect()">Conectar</button>
+        </div>
+
+
+        <bootstrap-panel ng-show="connected" title="Dados" type="primary">
             <span>Usuario: {{findValue(OIDS.USERNAME)}}</span>
             <span>Localização: {{findValue(OIDS.LOCATION)}}</span>
         </bootstrap-panel>
