@@ -9,6 +9,7 @@
     <title>Trab1 Ger. Redes</title>
 
     <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css">
 
     <script src="../bower_components/jquery/dist/jquery.js"></script>
     <script src="../bower_components/angular/angular.js"></script>
@@ -31,9 +32,12 @@
         </div>
 
 
-        <bootstrap-panel ng-show="connected" title="Dados" type="primary">
-            <span>Usuario: {{findValue(OIDS.USERNAME)}}</span>
-            <span>Localização: {{findValue(OIDS.LOCATION)}}</span>
+        <bootstrap-panel class="row" ng-show="connected" title="Dados" type="primary">
+            <div class="data-block col-md-3">
+                <span>Usuario: {{findValue(OIDS.USERNAME)}}</span>
+                <span>Localização: {{findValue(OIDS.LOCATION)}}</span>
+                <span>UpTime: {{findValue(OIDS.SYSUPTIME) / 100}} segundos</span>
+            </div>
         </bootstrap-panel>
     </div>
 

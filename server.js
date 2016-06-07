@@ -12,7 +12,16 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.listen(8080);
 console.log("App listening on port 8080");
 
+
+//http://www.simpleweb.org/ietf/mibs/modules/html/?category=IETF&module=SNMPv2-MIB
+
 var session = null;
+
+var OIDS = {
+    USERNAME: '1.3.6.1.2.1.1.5.0',
+    LOCATION: '1.3.6.1.2.1.1.6.0',
+    SYSUPTIME: '1.3.6.1.2.1.1.3.0'
+};
 
 app.post('/api/start', function(req, res){
     session = snmp.createSession(req.body.hostAddress, "public", {version: snmp.Version2c});
@@ -27,7 +36,7 @@ app.get('/api/data', function (req, res) {
         return;
     }
     
-    var oids = ['1.3.6.1.2.1.1.5.0', '1.3.6.1.2.1.1.6.0'];
+    var oids = [OIDS.USERNAME, OIDS.LOCATION, OIDS.SYSUPTIME];
 
     session.get(oids, function (err, result) {
         if (err) {
