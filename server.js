@@ -6,6 +6,7 @@ var snmp = require("net-snmp");
 var StringDecoder = require('string_decoder').StringDecoder;
 var bodyParser = require('body-parser'); //parametros para o POST
 var _ = require('lodash');
+var decoder = new StringDecoder('utf8');
 
 var app = express();
 app.use(express.static(__dirname));
@@ -28,7 +29,7 @@ var SYSTEM_OIDS = {
 }; //Dados do ITEM 2
 
 
-var INTERFACES_TABLE = '1.3.6.1.2.1.2'; //Tabela para o item 3
+var INTERFACES_TABLE = '1.3.6.1.2.1.2.2'; //Tabela para o item 3
 
 app.post('/api/start', function(req, res){
     //Conecta ao IP enviado Item 1
@@ -44,12 +45,24 @@ app.get('/api/interfaces', function(req, res){
 
     //20 max of rows
     session.table(INTERFACES_TABLE, 20, function(err, result){
-        res.json(result);
+        if (err) {
+            console.log(err);
+            res.status(400).json(err);
+            return;
+        }else{
+            _.forEach(result, function(item){
+                //temos que converter as strings
+                //Teremos 2 campos String o ifDescr(2) e o ifPhysAddress(6)
+                result[2].value = decoder.write(result[2].value);
+                result[6].value = decoder.write(result[6].value);
+            });
+
+            res.json(result);
+        }
     });
 });
 
 app.get('/api/data', function (req, res) {
-    var decoder = new StringDecoder('utf8');
 
     if(session == null){
         res.status(400).send('');
@@ -65,6 +78,8 @@ app.get('/api/data', function (req, res) {
     session.get(system_oids, function (err, result) {
         if (err) {
             console.log(err);
+            res.status(400).json(err);
+            return;
         }else{
             for (var i = 0; i < result.length; i++) {
                 if (result[i].type == 4) {
