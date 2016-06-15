@@ -17,13 +17,15 @@ angular.module('MyApp')
 
         $scope.hostAddress = "127.0.0.1";
 
-        var OIDS = {
+        var SYSTEM_OIDS = {
+            DESCR: '1.3.6.1.2.1.1.1.0',
+            SYSUPTIME: '1.3.6.1.2.1.1.3.0',
+            CONTACT: '1.3.6.1.2.1.1.4.0',
             USERNAME: '1.3.6.1.2.1.1.5.0',
-            LOCATION: '1.3.6.1.2.1.1.6.0',
-            SYSUPTIME: '1.3.6.1.2.1.1.3.0'
+            LOCATION: '1.3.6.1.2.1.1.6.0'
         };
 
-        $scope.OIDS = OIDS;
+        $scope.SYSTEM_OIDS = SYSTEM_OIDS;
 
         $scope.data = undefined;
 

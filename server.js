@@ -4,9 +4,11 @@
 var express = require('express');
 var snmp = require("net-snmp");
 var StringDecoder = require('string_decoder').StringDecoder;
+var bodyParser = require('body-parser'); //parametros para o POST
+var _ = require('lodash');
 
 var app = express();
-var bodyParser = require('body-parser'); //parametros para o POST
+app.use(express.static(__dirname));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.listen(8080);
@@ -17,10 +19,12 @@ console.log("App listening on port 8080");
 
 var session = null;
 
-var OIDS = {
+var SYSTEM_OIDS = {
+    DESCR: '1.3.6.1.2.1.1.1.0',
+    SYSUPTIME: '1.3.6.1.2.1.1.3.0',
+    CONTACT: '1.3.6.1.2.1.1.4.0',
     USERNAME: '1.3.6.1.2.1.1.5.0',
-    LOCATION: '1.3.6.1.2.1.1.6.0',
-    SYSUPTIME: '1.3.6.1.2.1.1.3.0'
+    LOCATION: '1.3.6.1.2.1.1.6.0'
 };
 
 app.post('/api/start', function(req, res){
@@ -35,10 +39,14 @@ app.get('/api/data', function (req, res) {
         res.status(400).send('');
         return;
     }
-    
-    var oids = [OIDS.USERNAME, OIDS.LOCATION, OIDS.SYSUPTIME];
 
-    session.get(oids, function (err, result) {
+    var system_oids = [];
+
+    _.forEach(SYSTEM_OIDS, function(oid){
+        system_oids.push(oid);
+    });
+
+    session.get(system_oids, function (err, result) {
         if (err) {
             console.log(err);
         }else{
