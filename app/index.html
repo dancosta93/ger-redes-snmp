@@ -31,20 +31,22 @@
             <button ng-click="connect()">Conectar</button>
         </div>
 
+        <div ng-show="connected">
+            <bootstrap-panel class="row" title="Dados" type="primary">
+                <div class="data-block col-md-6">
+                    <span>Descr: {{findValue(SYSTEM_OIDS.DESCR)}}</span>
+                    <span>Contato: {{findValue(SYSTEM_OIDS.CONTACT)}}</span>
+                    <span>Usuario: {{findValue(SYSTEM_OIDS.USERNAME)}}</span>
+                    <span>Localização: {{findValue(SYSTEM_OIDS.LOCATION)}}</span>
+                    <span>UpTime: {{(findValue(SYSTEM_OIDS.SYSUPTIME) / 100 / 60) | number : 2}} minutos</span>
+                </div>
+            </bootstrap-panel>
 
-        <bootstrap-panel class="row" ng-show="connected" title="Dados" type="primary">
-            <div class="data-block col-md-3">
-                <span>Descr: {{findValue(SYSTEM_OIDS.DESCR)}}</span>
-                <span>Contato: {{findValue(SYSTEM_OIDS.CONTACT)}}</span>
-                <span>Usuario: {{findValue(SYSTEM_OIDS.USERNAME)}}</span>
-                <span>Localização: {{findValue(SYSTEM_OIDS.LOCATION)}}</span>
-                <span>UpTime: {{findValue(SYSTEM_OIDS.SYSUPTIME) / 100 / 60}} minutos</span>
-            </div>
-        </bootstrap-panel>
+            <bootstrap-panel class="row" title="Interfaces" type="primary">
+                <button ng-click="testInterfaces()">Interfaces</button>
+            </bootstrap-panel>
+        </div>
     </div>
-
-
-
 </div>
 
 

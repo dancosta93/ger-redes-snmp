@@ -29,6 +29,13 @@ angular.module('MyApp')
 
         $scope.data = undefined;
 
+        $scope.testInterfaces = function(){
+            $http.get(URL + "api/interfaces")
+                .then(function (data) {
+                    console.log(data);//TODO
+                });
+        };
+
         $scope.connect = function () {
             $http.post(URL + 'api/start', {hostAddress: $scope.hostAddress})
                 .then(function () {

@@ -25,11 +25,27 @@ var SYSTEM_OIDS = {
     CONTACT: '1.3.6.1.2.1.1.4.0',
     USERNAME: '1.3.6.1.2.1.1.5.0',
     LOCATION: '1.3.6.1.2.1.1.6.0'
-};
+}; //Dados do ITEM 2
+
+
+var INTERFACES_TABLE = '1.3.6.1.2.1.2'; //Tabela para o item 3
 
 app.post('/api/start', function(req, res){
+    //Conecta ao IP enviado Item 1
     session = snmp.createSession(req.body.hostAddress, "public", {version: snmp.Version2c});
     res.status(200).send('');
+});
+
+app.get('/api/interfaces', function(req, res){
+    if(session == null){
+        res.status(400).send('');
+        return;
+    }
+
+    //20 max of rows
+    session.table(INTERFACES_TABLE, 20, function(err, result){
+        res.json(result);
+    });
 });
 
 app.get('/api/data', function (req, res) {
@@ -59,5 +75,4 @@ app.get('/api/data', function (req, res) {
         }
         res.json(result);
     });
-
 });
