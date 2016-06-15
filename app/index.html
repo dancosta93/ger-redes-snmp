@@ -34,6 +34,8 @@
 
         <bootstrap-panel class="row" ng-show="connected" title="Dados" type="primary">
             <div class="data-block col-md-3">
+                <span>Descr: {{findValue(SYSTEM_OIDS.DESCR)}}</span>
+                <span>Contato: {{findValue(SYSTEM_OIDS.CONTACT)}}</span>
                 <span>Usuario: {{findValue(SYSTEM_OIDS.USERNAME)}}</span>
                 <span>Localização: {{findValue(SYSTEM_OIDS.LOCATION)}}</span>
                 <span>UpTime: {{findValue(SYSTEM_OIDS.SYSUPTIME) / 100 / 60}} minutos</span>
