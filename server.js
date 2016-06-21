@@ -1,9 +1,9 @@
 /**
  * Created by User on 5/31/2016.
  */
-var express = require('express');
-var snmp = require("net-snmp");
-var StringDecoder = require('string_decoder').StringDecoder;
+ var express = require('express');
+ var snmp = require("net-snmp");
+ var StringDecoder = require('string_decoder').StringDecoder;
 var bodyParser = require('body-parser'); //parametros para o POST
 var _ = require('lodash');
 var decoder = new StringDecoder('utf8');
@@ -60,17 +60,30 @@ app.get('/api/interfaces', function(req, res){
                 	obj.descr = decoder.write(item[2]);
 
                 //MTU é o quarto item, e é integer
-                obj.mtu = item[4];
+                if(item[4])
+                    obj.mtu = item[4];
                 //O phys address nao eh convertido pra string, pois representa o MAC address. Cada item do array esta em decimal, e sera convertido para hexadecimal
                 //http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
-                obj.physAddress = item[6];
+
+                if(item[6] && item[6].length > 0)
+                    obj.physAddress = convertMacAddress(item[6]);
 
                 response.push(obj);
-			}
+            }
             res.json(response);
         }
     });
 });
+
+//O MAC address eh retornado como um array de inteiro, temos que converter para hexadecimal e transformar em string
+function convertMacAddress(addrArray){
+    var convertido = []
+    _.forEach(addrArray, function(i){
+        convertido.push(i.toString(16)); //converte na base 16 para converter para hexa
+    });  
+
+    return convertido.join(":");
+}
 
 app.get('/api/data', function (req, res) {
 
