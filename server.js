@@ -46,21 +46,28 @@ app.get('/api/interfaces', function(req, res){
     //20 max of rows
     session.table(INTERFACES_TABLE, 20, function(err, result){
         if (err) {
-            console.log(err);
             res.status(400).json(err);
             return;
         }else{
+            var response = [];
 			var keys = Object.keys(result); //preciamos usar as keys ja que o array eh associativo, ele retornara o indice do oid como .1 .2 .3, etc.
 			for(var i = 0; i < keys.length; i++){
 				var item = result[keys[i]];
+                var obj = {};
                 //temos que converter as strings
-                //Teremos 2 campos String o ifDescr(2) e o ifPhysAddress(6)
+                //O ifDescr(2) eh string entao temos que converter
                 if(item[2])
-                	item[2] = decoder.write(item[2]);
-            	//O phys address nao eh convertido pra string, pois representa o MAC address. Cada item do array esta em decimal, e sera convertido para hexadecimal
+                	obj.descr = decoder.write(item[2]);
+
+                //MTU é o quarto item, e é integer
+                obj.mtu = item[4];
+                //O phys address nao eh convertido pra string, pois representa o MAC address. Cada item do array esta em decimal, e sera convertido para hexadecimal
                 //http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
+                obj.physAddress = item[6];
+
+                response.push(obj);
 			}
-            res.json(result);
+            res.json(response);
         }
     });
 });

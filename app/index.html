@@ -42,8 +42,35 @@
                 </div>
             </bootstrap-panel>
 
-            <bootstrap-panel class="row" title="Interfaces" type="primary">
-                <button ng-click="loadInterfaces()">Interfaces</button>
+            <bootstrap-panel class="row" title="Interfaces de Rede" type="primary">
+                <button class="row" ng-click="loadInterfaces()">Carregar Interfaces</button>
+                <span class="row">Quantidade de interfaces {{interfaces.length}}</span>
+
+                <table class="table-striped">
+                    <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Endereco Fisico (MAC)</th>
+                        <th>MTU</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="i in interfaces">
+                        <td>
+                            {{i.descr}}
+                        </td>
+                        <td>
+                            {{i.mtu}}
+                        </td>
+                        <td>
+                            {{i.physAddress}}
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
             </bootstrap-panel>
         </div>
     </div>

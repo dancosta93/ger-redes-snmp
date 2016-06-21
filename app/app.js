@@ -32,7 +32,6 @@ angular.module('MyApp')
         $scope.loadInterfaces = function(){
             $http.get(URL + "api/interfaces")
                 .then(function (data) {
-                    console.log(data);//TODO
                     $scope.interfaces = data.data;
                 });
         };
