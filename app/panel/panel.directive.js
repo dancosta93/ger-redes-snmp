@@ -4,22 +4,16 @@
 (function () {
     'use strict';
     angular.module('MyApp')
-        .directive('bootstrapPanel',
+        .directive('bootstrapPanel', [
             function () {
                 return {
                     restrict: 'E',
                     templateUrl: 'panel/panel.html',
-                    transclude: true,
-                    bindToController: {
-                        title: '@title',
-                        type: '@type'
+                    scope: {
+                        title: '@',
+                        type: '@'
                     },
-                    controller: Controller,
-                    controllerAs: 'ctrl'
+                    transclude:true
                 };
-
-                function Controller($attrs) {
-                    var ctrl = this;
-                }
-            });
+            }]);
 }());
