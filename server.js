@@ -130,7 +130,7 @@ app.get('/api/data', function (req, res) {
 /**
  * Informacao sobre memoria
  */
-app.get('api/memory', function(req,res){
+app.get('/api/memory', function(req,res){
 
 });
 
@@ -139,7 +139,7 @@ app.get('api/memory', function(req,res){
  * Informacao sobre armazenamento
  * Tamanho do HD, espaco livre e ocupado de cada particao em percentuais (Item 4.1)
  */
-app.get('api/storage', function(req,res){
+app.get('/api/storage', function(req,res){
     //http://oid-info.com/get/1.3.6.1.2.1.25.2.3.1
     //Storage esta dentro da MIB_HOST, usamos o hrStorage (2) e a table - hrStorageTable(3)
 
@@ -166,7 +166,7 @@ app.get('api/storage', function(req,res){
  * Visualizar o nome dos programas instalados e data de instalacao (Item 4.2)
  *
  */
-app.get('api/swInstalled', function(req,res){
+app.get('/api/swInstalled', function(req,res){
     //http://oid-info.com/get/1.3.6.1.2.1.25.6.3
     //hrSWInstalled esta dentro da MIB_HOST, usamos o hrSWInstalled (6) e a table - hrSWInstalledTable(3)
 
@@ -193,7 +193,7 @@ app.get('api/swInstalled', function(req,res){
  * Visualizar os programas em execucao e a qtd. de memoria e CPU que cada processo esta utilizando (Item 4.4)
  *
  */
-app.get('api/swRunning', function(req,res){
+app.get('/api/swRunning', function(req,res){
     //http://oid-info.com/get/1.3.6.1.2.1.25.4.2
     //hrSWRun esta dentro da MIB_HOST, usamos o hrSWRun (4) e a table - hrSWRunTable(2)
 
