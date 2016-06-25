@@ -31,12 +31,20 @@ var SYSTEM_OIDS = {
 
 var INTERFACES_TABLE = '1.3.6.1.2.1.2.2'; //Tabela para o item 3
 
+var MIB_HOST = '1.3.6.1.2.1.25'; // Para o item 4 (hrSystem:1, hrStorage:2, hrDevice:3, hrSWRun:4, hrSWRunPerf:5, hrSWInstalled:6)
+
+/**
+ * Inicia um objeto com as configuracoes para o SNMP usar
+ */
 app.post('/api/start', function(req, res){
     //Conecta ao IP enviado Item 1
     session = snmp.createSession(req.body.hostAddress, "public", {version: snmp.Version2c});
     res.status(200).send('');
 });
 
+/**
+ * Retorna as interfaces de rede (modeladas para o ex: 3)
+ */
 app.get('/api/interfaces', function(req, res){
     if(session == null){
         res.status(400).send('');
@@ -85,6 +93,9 @@ function convertMacAddress(addrArray){
     return convertido.join(":");
 }
 
+/**
+ * Retorna os dados principais do sistema
+ */
 app.get('/api/data', function (req, res) {
 
     if(session == null){
@@ -114,3 +125,94 @@ app.get('/api/data', function (req, res) {
         res.json(result);
     });
 });
+
+
+/**
+ * Informacao sobre memoria
+ */
+app.get('api/memory', function(req,res){
+
+});
+
+
+/**
+ * Informacao sobre armazenamento
+ * Tamanho do HD, espaco livre e ocupado de cada particao em percentuais (Item 4.1)
+ */
+app.get('api/storage', function(req,res){
+    //http://oid-info.com/get/1.3.6.1.2.1.25.2.3.1
+    //Storage esta dentro da MIB_HOST, usamos o hrStorage (2) e a table - hrStorageTable(3)
+
+    var HR_STORAGE_TABLE = MIB_HOST + ".2.3";
+
+    if(session == null){
+        res.status(400).send('');
+        return;
+    }
+
+    //20 max of rows
+    session.table(HR_STORAGE_TABLE, 20, function(err, result){
+        if (err) {
+            res.status(400).json(err);
+            return;
+        }else{
+            res.json(result);
+        }
+    });
+});
+
+/**
+ * Retorna os softwares instalados
+ * Visualizar o nome dos programas instalados e data de instalacao (Item 4.2)
+ *
+ */
+app.get('api/swInstalled', function(req,res){
+    //http://oid-info.com/get/1.3.6.1.2.1.25.6.3
+    //hrSWInstalled esta dentro da MIB_HOST, usamos o hrSWInstalled (6) e a table - hrSWInstalledTable(3)
+
+    var HR_SW_INSTALLED_TABLE = MIB_HOST + ".6.3";
+
+    if(session == null){
+        res.status(400).send('');
+        return;
+    }
+
+    //20 max of rows
+    session.table(HR_SW_INSTALLED_TABLE, 20, function(err, result){
+        if (err) {
+            res.status(400).json(err);
+            return;
+        }else{
+            res.json(result);
+        }
+    });
+});
+
+/**
+ * Retorna os programas rodando
+ * Visualizar os programas em execucao e a qtd. de memoria e CPU que cada processo esta utilizando (Item 4.4)
+ *
+ */
+app.get('api/swRunning', function(req,res){
+    //http://oid-info.com/get/1.3.6.1.2.1.25.4.2
+    //hrSWRun esta dentro da MIB_HOST, usamos o hrSWRun (4) e a table - hrSWRunTable(2)
+
+    var HR_SW_RUN_TABLE = MIB_HOST + ".4.2";
+
+    if(session == null){
+        res.status(400).send('');
+        return;
+    }
+
+    //20 max of rows
+    session.table(HR_SW_RUN_TABLE, 20, function(err, result){
+        if (err) {
+            res.status(400).json(err);
+            return;
+        }else{
+            res.json(result);
+        }
+    });
+});
+
+

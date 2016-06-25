@@ -45,7 +45,6 @@
             <bootstrap-panel class="row" title="Interfaces de Rede" type="primary">
                 <button class="row" ng-click="loadInterfaces()">Carregar Interfaces</button>
                 <span class="row">Quantidade de interfaces {{interfaces.length}}</span>
-
                 <table style="width:100%" class="table-striped">
                     <thead>
                     <tr>
@@ -54,7 +53,6 @@
                         <th>Endereco Fisico (MAC)</th>
                     </tr>
                     </thead>
-
                     <tbody>
                     <tr ng-repeat="i in interfaces">
                         <td>
@@ -68,9 +66,20 @@
                         </td>
                     </tr>
                     </tbody>
-
                 </table>
+            </bootstrap-panel>
 
+            <bootstrap-panel class="row" title="Armazenamento" type="primary">
+                <button class="row" ng-click="loadStorage()">Carregar Interfaces</button>
+
+            </bootstrap-panel>
+
+            <bootstrap-panel class="row" title="Softwares Instalados" type="primary">
+                <button class="row" ng-click="loadSwInstalled()">Carregar Interfaces</button>
+            </bootstrap-panel>
+
+            <bootstrap-panel class="row" title="Softwares Executando" type="primary">
+                <button class="row" ng-click="loadSwRunning()">Carregar Interfaces</button>
             </bootstrap-panel>
         </div>
     </div>

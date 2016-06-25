@@ -36,6 +36,30 @@ angular.module('MyApp')
                 });
         };
 
+        $scope.loadStorage = function(){
+            $http.get(URL + "api/storage")
+                .then(function (data) {
+                    console.log(data);
+                    $scope.storage = data.data;
+                });
+        };
+
+        $scope.loadSwInstalled = function(){
+            $http.get(URL + "api/swInstalled")
+                .then(function (data) {
+                    console.log(data);
+                    $scope.swInstalled = data.data;
+                });
+        };
+
+        $scope.loadSwRunning = function(){
+            $http.get(URL + "api/swRunning")
+                .then(function (data) {
+                    console.log(data);
+                    $scope.swRunning = data.data;
+                });
+        };
+
         $scope.connect = function () {
             $http.post(URL + 'api/start', {hostAddress: $scope.hostAddress})
                 .then(function () {
