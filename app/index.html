@@ -45,7 +45,20 @@
             <bootstrap-panel class="row" title="Portas Abertas" type="warning">
                 <button class="btn btn-info" class="row" ng-click="checkPorts()">Checar</button>
 
-                {{portsData}}
+                <table style="width:100%" class="table-striped">
+                    <thead>
+                    <tr>
+                        <th>Porta - Estado - Serviço</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in portsOpen">
+                        <td>
+                            {{i}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Interfaces de Rede" type="primary">

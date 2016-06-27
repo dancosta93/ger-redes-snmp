@@ -137,7 +137,7 @@ app.get('/api/network', function (req, res) {
 /**
  * Checa se uma porta esta aberta usando nmap
  */
-app.get('/api/checkPorts', function (req, res) {
+app.post('/api/checkPorts', function (req, res) {
     shellJs.exec('nmap -O ' + req.body.hostAddress, function(code, stdout, stderr) {
         res.json(stdout);
     });

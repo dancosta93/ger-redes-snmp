@@ -30,9 +30,19 @@ angular.module('MyApp')
         $scope.data = undefined;
 
         $scope.checkPorts = function(){
-            $http.get(URL + "api/checkPorts", {hostAddress: $scope.hostAddress})
+            $http.post(URL + "api/checkPorts", {hostAddress: $scope.hostAddress})
                 .then(function (data) {
-                    $scope.portsData = data.data.split("\n");
+                    //as linhas com as portas abertas estao entre a linha que inicia com PORT(o header) e a que comeca com Device type
+                    var firstSplit = data.data.split("PORT");
+                    // console.log(firstSplit);
+                    var secondSplit = firstSplit[1].split("Device type");
+                    // console.log(secondSplit);
+                    var thirdSplit = secondSplit[0].split("\n");
+                    // console.log(thirdSplit);
+                    //Agora ignoramos o primeiro e o ultimo item
+                    thirdSplit.shift();
+                    thirdSplit.pop();
+                    $scope.portsOpen = thirdSplit;
                 });
         };
 
