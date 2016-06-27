@@ -29,6 +29,13 @@ angular.module('MyApp')
 
         $scope.data = undefined;
 
+        $scope.checkPorts = function(){
+            $http.get(URL + "api/checkPorts")
+                .then(function (data) {
+                    $scope.portsData = data.split("\n");
+                });
+        };
+
         $scope.loadInterfaces = function(){
             $http.get(URL + "api/interfaces")
                 .then(function (data) {

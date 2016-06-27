@@ -7,7 +7,7 @@ var StringDecoder = require('string_decoder').StringDecoder;
 var bodyParser = require('body-parser'); //parametros para o POST
 var _ = require('lodash');
 var decoder = new StringDecoder('utf8');
-
+var shellJs = require('shelljs');
 var app = express();
 app.use(express.static(__dirname));
 app.use(bodyParser.json()); // support json encoded bodies
@@ -138,6 +138,15 @@ app.get('/api/network', function (req, res) {
  */
 app.get('/api/memory', function (req, res) {
 
+});
+
+/**
+ * Checa se uma porta esta aberta usando nmap
+ */
+app.get('/api/checkPorts', function (req, res) {
+    shellJs.exec('nmap -O 127.0.0.1', function(code, stdout, stderr) {
+        res.json(stdout);
+    });
 });
 
 

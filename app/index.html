@@ -42,6 +42,12 @@
                 </div>
             </bootstrap-panel>
 
+            <bootstrap-panel class="row" title="Portas Abertas" type="warning">
+                <button class="btn btn-info" class="row" ng-click="checkPorts()">Checar</button>
+
+                {{portsData}}
+            </bootstrap-panel>
+
             <bootstrap-panel class="row" title="Interfaces de Rede" type="primary">
                 <button class="btn btn-info" class="row" ng-click="loadInterfaces()">Carregar dados</button>
                 <span class="row">Quantidade de interfaces {{interfaces.length}}</span>
