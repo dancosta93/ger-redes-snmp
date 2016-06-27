@@ -7,6 +7,12 @@
     color: red;
 }
 
+.danger{
+    color: white;
+    font-weight:bold;
+    background-color: red;
+}
+
 .overlay-submit {
     z-index: 500;
     background-color: white;

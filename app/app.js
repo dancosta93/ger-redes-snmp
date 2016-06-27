@@ -34,22 +34,24 @@ angular.module('MyApp')
         $scope.params.destAddress = "";
         $scope.params.hostAddress = "127.0.0.1";
 
+        $scope.params.dangerStoragePercentage = 85;
+
         /**
          * Testa rotas com mtr
          */
-        $scope.testRoute = function(){
+        $scope.testRoute = function () {
             $scope.loading = true;
             $scope.routeError = false;
             $scope.routes = [];
             $http.post(URL + "api/testRoute", {destAddress: $scope.params.destAddress})
                 .then(function (data) {
-                    data.data = data.data.replace(/ +(?= )/g,''); //transforma todos os espacos multiplos em apenas um espaco
+                    data.data = data.data.replace(/ +(?= )/g, ''); //transforma todos os espacos multiplos em apenas um espaco
                     //descarta os 2 primeiros
                     $scope.routes = data.data.split("\n");
                     $scope.routes.shift();
                     $scope.routes.shift();
                     $scope.loading = false;
-                },function(err){
+                }, function (err) {
                     $scope.loading = false;
                     $scope.routeError = true;
                     console.log(err);
@@ -59,12 +61,12 @@ angular.module('MyApp')
         /**
          * Checa portas abertas com nmap
          */
-        $scope.checkPorts = function(){
+        $scope.checkPorts = function () {
             $scope.loading = true;
             $scope.portsOpen = [];
             $http.post(URL + "api/checkPorts", {hostAddress: $scope.params.hostAddress})
                 .then(function (data) {
-                    data.data = data.data.replace(/ +(?= )/g,''); //transforma todos os espacos multiplos em apenas um espaco
+                    data.data = data.data.replace(/ +(?= )/g, ''); //transforma todos os espacos multiplos em apenas um espaco
                     //as linhas com as portas abertas estao entre a linha que inicia com PORT(o header) e a que comeca com Device type
                     var firstSplit = data.data.split("PORT");
                     // console.log(firstSplit);
@@ -77,7 +79,7 @@ angular.module('MyApp')
                     thirdSplit.pop();
                     $scope.portsOpen = thirdSplit;
                     $scope.loading = false;
-                },function(err){
+                }, function (err) {
                     $scope.portsError = true;
                     $scope.loading = false;
                     console.log(err);
@@ -87,14 +89,14 @@ angular.module('MyApp')
         /**
          * Carrega os dados de interfaces de rede
          */
-        $scope.loadInterfaces = function(){
+        $scope.loadInterfaces = function () {
             $scope.loading = true;
             $scope.interfaces = [];
             $http.get(URL + "api/interfaces")
                 .then(function (data) {
                     $scope.loading = false;
                     $scope.interfaces = data.data;
-                },function(err){
+                }, function (err) {
                     $scope.interfaceError = true;
                     $scope.loading = false;
                     console.log(err);
@@ -104,14 +106,14 @@ angular.module('MyApp')
         /**
          * Carrega os dados de armazenamento
          */
-        $scope.loadStorage = function(){
+        $scope.loadStorage = function () {
             $scope.loading = true;
             $scope.storage = [];
             $http.get(URL + "api/storage")
                 .then(function (data) {
                     $scope.loading = false;
                     $scope.storage = data.data;
-                },function(err){
+                }, function (err) {
                     $scope.storageError = true;
                     $scope.loading = false;
                     console.log(err);
@@ -121,7 +123,7 @@ angular.module('MyApp')
         /**
          * Carrega os dados de softwares instalados
          */
-        $scope.loadSwInstalled = function(){
+        $scope.loadSwInstalled = function () {
             vm.swInstalledPage = 1;
             $scope.loading = true;
             $scope.swInstalled = [];
@@ -129,7 +131,7 @@ angular.module('MyApp')
                 .then(function (data) {
                     $scope.loading = false;
                     $scope.swInstalled = data.data;
-                },function(err){
+                }, function (err) {
                     $scope.swInstalledError = true;
                     $scope.loading = false;
                     console.log(err);
@@ -139,7 +141,7 @@ angular.module('MyApp')
         /**
          * Carrega os dados de Softwares Rodando
          */
-        $scope.loadSwRunning = function(){
+        $scope.loadSwRunning = function () {
             vm.swRunningPage = 1;
             $scope.loading = true;
             $scope.swRunning = [];
@@ -147,7 +149,7 @@ angular.module('MyApp')
                 .then(function (data) {
                     $scope.loading = false;
                     $scope.swRunning = data.data;
-                },function(err){
+                }, function (err) {
                     $scope.swRunningError = true;
                     $scope.loading = false;
                     console.log(err);
@@ -172,7 +174,7 @@ angular.module('MyApp')
          * @param date
          * @returns {string}
          */
-        $scope.parseDate = function(date){
+        $scope.parseDate = function (date) {
             var year = date[1];
             var month = date[2];
             var day = date[3];
@@ -190,6 +192,10 @@ angular.module('MyApp')
                 .then(function (data) {
                     $scope.loading = false;
                     $scope.data = data.data;
+                }, function (err) {
+                    $scope.loading = false;
+                    $scope.connected = false;
+                    alert("Não foi possível se conectar ao destino.");
                 });
         }
 

@@ -200,6 +200,8 @@ app.get('/api/storage', function (req, res) {
                 //Divide 2x por 1024, assim retornamos em MB
                 obj.storageSize = (item[5] * obj.allocationUnits) / 1024 / 1024; //precisamos multiplicar pela allocation units, o resultado sera em bytes
                 obj.storageUsed = (item[6] * obj.allocationUnits) / 1024 / 1024;//precisamos multiplicar pela allocation units
+
+                obj.percentageUsed = (obj.storageUsed / obj.storageSize) * 100;
                 response.push(obj);
             });
 

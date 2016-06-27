@@ -77,8 +77,10 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Desempenho - Testar Rota" type="info">
-                <input type="text" ng-model="params.destAddress"/>
-                <button class="btn btn-success" class="row" ng-click="testRoute()">Testar</button>
+                <div class="row">
+                    <input class="form-control col-md-3" placeholder="Endereço destino.." type="text" ng-model="params.destAddress"/>
+                    <button class="btn btn-success" class="row" ng-click="testRoute()">Testar</button>
+                </div>
 
                 <table ng-show="routes && routes.length > 0" style="width:100%" class="table-striped">
                     <thead>
@@ -156,6 +158,12 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Configuração - Armazenamento" type="primary">
+
+                <div class="row">
+                    <input class="form-control col-md-3" placeholder="Alerta perigo" type="number" max="100" min="0" ng-model="params.dangerStoragePercentage"/>
+                </div>
+
+
                 <button class="btn btn-success" class="row" ng-click="loadStorage()">Carregar dados</button>
                 <table ng-show="storage && storage.length > 0" style="width:100%" class="table-striped">
                     <thead>
@@ -177,8 +185,8 @@
                         <td>
                             {{i.storageUsed | number: 2}} Mb
                         </td>
-                        <td>
-                            {{(i.storageUsed / i.storageSize) * 100 | number : 1}}%
+                        <td ng-class="{'danger':i.percentageUsed >= params.dangerStoragePercentage}">
+                            {{i.percentageUsed | number : 1}}%
                         </td>
                     </tr>
                     </tbody>
@@ -213,6 +221,7 @@
                         </tr>
                         </tbody>
                     </table>
+                    <br>
                     <span>Mostrando {{((ctrl.swInstalledPage - 1) * ctrl.perPage) + 1}}/{{ctrl.swInstalledPage * ctrl.perPage}} de {{swInstalled.length}} registros</span>
                     <nav>
                         <ul class="pagination">
@@ -266,6 +275,7 @@
                         </tr>
                         </tbody>
                     </table>
+                    <br>
                     <span>Mostrando {{((ctrl.swRunningPage - 1) * ctrl.perPage) + 1}}/{{ctrl.swRunningPage * ctrl.perPage}} de {{swRunning.length}} registros</span>
                     <nav>
                         <ul class="pagination">
@@ -277,7 +287,6 @@
                         </ul>
                     </nav>
                 </div>
-
 
                 <span ng-show="swRunningError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
