@@ -133,18 +133,12 @@ app.get('/api/network', function (req, res) {
 
 });
 
-/**
- * Informacao sobre memoria
- */
-app.get('/api/memory', function (req, res) {
-
-});
 
 /**
  * Checa se uma porta esta aberta usando nmap
  */
 app.get('/api/checkPorts', function (req, res) {
-    shellJs.exec('nmap -O 127.0.0.1', function(code, stdout, stderr) {
+    shellJs.exec('nmap -O ' + req.body.hostAddress, function(code, stdout, stderr) {
         res.json(stdout);
     });
 });

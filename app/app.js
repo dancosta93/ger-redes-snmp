@@ -30,9 +30,9 @@ angular.module('MyApp')
         $scope.data = undefined;
 
         $scope.checkPorts = function(){
-            $http.get(URL + "api/checkPorts")
+            $http.get(URL + "api/checkPorts", {hostAddress: $scope.hostAddress})
                 .then(function (data) {
-                    $scope.portsData = data.split("\n");
+                    $scope.portsData = data.data.split("\n");
                 });
         };
 
