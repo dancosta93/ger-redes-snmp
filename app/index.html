@@ -48,43 +48,75 @@
                 <table ng-show="portsOpen" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
-                        <th>Porta - Estado - Serviço</th>
+                        <th>Porta</th>
+                        <th>Estado</th>
+                        <th>Serviço</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="i in portsOpen">
                         <td>
-                            {{i}}
+                            {{i.split(" ")[0]}}
+                        </td>
+                        <td>
+                            {{i.split(" ")[1]}}
+                        </td>
+                        <td>
+                            {{i.split(" ")[2]}}
                         </td>
                     </tr>
                     </tbody>
                 </table>
+
+                <span ng-show="portsError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Testar Rota" type="info">
                 <input type="text" ng-model="params.destAddress"/>
                 <button class="btn btn-info" class="row" ng-click="testRoute()">Testar</button>
 
-                <table ng-show="routes" style="width:100%" class="table-striped">
+                <table ng-show="routes && routes.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
-                        <th>Route</th>
+                        <th>Endereço</th>
+                        <th>Perda%</th>
+                        <th>Enviados</th>
+                        <th>Média</th>
+                        <th>Melhor</th>
+                        <th>Pior</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="i in routes">
                         <td>
-                            {{i}}
+                            {{i.split(" ")[2]}}
+                        </td>
+                        <td>
+                            {{i.split(" ")[3]}}
+                        </td>
+                        <td>
+                            {{i.split(" ")[4]}}
+                        </td>
+                        <td>
+                            {{i.split(" ")[6]}}
+                        </td>
+                        <td>
+                            {{i.split(" ")[7]}}
+                        </td>
+                        <td>
+                            {{i.split(" ")[8]}}
                         </td>
                     </tr>
                     </tbody>
                 </table>
+
+                <span ng-show="routeError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Interfaces de Rede" type="primary">
                 <button class="btn btn-info" class="row" ng-click="loadInterfaces()">Carregar dados</button>
                 <span class="row">Quantidade de interfaces {{interfaces.length}}</span>
-                <table style="width:100%" class="table-striped">
+                <table ng-show="interfaces && interfaces.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
                         <th>Descrição</th>
@@ -106,11 +138,13 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <span ng-show="interfaceError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Armazenamento" type="primary">
                 <button class="btn btn-info" class="row" ng-click="loadStorage()">Carregar dados</button>
-                <table style="width:100%" class="table-striped">
+                <table ng-show="storage && storage.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
                         <th>Descrição</th>
@@ -136,12 +170,14 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <span ng-show="storageError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Softwares Instalados" type="primary">
                 <button class="btn btn-info" class="row" ng-click="loadSwInstalled()">Carregar dados</button>
 
-                <table style="width:100%" class="table-striped">
+                <table ng-show="swInstalled && swInstalled.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
                         <th>Nome</th>
@@ -163,12 +199,14 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <span ng-show="swInstalledError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Softwares Executando" type="primary">
                 <button class="btn btn-info" class="row" ng-click="loadSwRunning()">Carregar dados</button>
 
-                <table style="width:100%" class="table-striped">
+                <table ng-show="swRunning && swRunning.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
                         <th>Nome</th>
@@ -202,6 +240,8 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <span ng-show="swRunningError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
         </div>
     </div>

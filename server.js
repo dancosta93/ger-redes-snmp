@@ -147,7 +147,7 @@ app.post('/api/checkPorts', function (req, res) {
  * Testa a rota para um destino
  */
 app.post('/api/testRoute', function (req, res) {
-    shellJs.exec('mtr -rw ' + req.body.destAddress, function(code, stdout, stderr) {
+    shellJs.exec('mtr --report ' + req.body.destAddress, function(code, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         if(stderr){

@@ -2,3 +2,7 @@
 .data-block span{
     display: block;
 }
+
+.error{
+    color: red;
+}

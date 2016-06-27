@@ -33,16 +33,25 @@ angular.module('MyApp')
         $scope.params.hostAddress = "127.0.0.1";
 
         $scope.testRoute = function(){
+            $scope.routeError = false;
+            $scope.routes = [];
             $http.post(URL + "api/testRoute", {destAddress: $scope.params.destAddress})
                 .then(function (data) {
+                    data.data = data.data.replace(/ +(?= )/g,''); //transforma todos os espacos multiplos em apenas um espaco
+                    //descarta os 2 primeiros
                     $scope.routes = data.data.split("\n");
-                    console.log($scope.routes);
+                    $scope.routes.shift().shift();
+                },function(err){
+                    $scope.routeError = true;
+                    console.log(err);
                 });
         };
 
         $scope.checkPorts = function(){
+            $scope.portsOpen = [];
             $http.post(URL + "api/checkPorts", {hostAddress: $scope.params.hostAddress})
                 .then(function (data) {
+                    data.data = data.data.replace(/ +(?= )/g,''); //transforma todos os espacos multiplos em apenas um espaco
                     //as linhas com as portas abertas estao entre a linha que inicia com PORT(o header) e a que comeca com Device type
                     var firstSplit = data.data.split("PORT");
                     // console.log(firstSplit);
@@ -54,6 +63,9 @@ angular.module('MyApp')
                     thirdSplit.shift();
                     thirdSplit.pop();
                     $scope.portsOpen = thirdSplit;
+                },function(err){
+                    $scope.portsError = true;
+                    console.log(err);
                 });
         };
 
@@ -61,6 +73,9 @@ angular.module('MyApp')
             $http.get(URL + "api/interfaces")
                 .then(function (data) {
                     $scope.interfaces = data.data;
+                },function(err){
+                    $scope.interfaceError = true;
+                    console.log(err);
                 });
         };
 
@@ -69,6 +84,9 @@ angular.module('MyApp')
                 .then(function (data) {
                     console.log(data);
                     $scope.storage = data.data;
+                },function(err){
+                    $scope.storageError = true;
+                    console.log(err);
                 });
         };
 
@@ -77,6 +95,9 @@ angular.module('MyApp')
                 .then(function (data) {
                     console.log(data);
                     $scope.swInstalled = data.data;
+                },function(err){
+                    $scope.swInstalledError = true;
+                    console.log(err);
                 });
         };
 
@@ -85,6 +106,9 @@ angular.module('MyApp')
                 .then(function (data) {
                     console.log(data);
                     $scope.swRunning = data.data;
+                },function(err){
+                    $scope.swRunningError = true;
+                    console.log(err);
                 });
         };
 
@@ -93,6 +117,8 @@ angular.module('MyApp')
                 .then(function () {
                     $scope.connected = true;
                     init();
+                },function(err){
+                    alert("Nao foi possivel conectar.");
                 });
         };
 
