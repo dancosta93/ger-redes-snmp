@@ -30,7 +30,7 @@ angular.module('MyApp')
         $scope.data = undefined;
 
         $scope.testRoute = function(){
-            $http.post(URL + "api/testRoute", {hostAddress: $scope.destAddress})
+            $http.post(URL + "api/testRoute", {destAddress: $scope.destAddress})
                 .then(function (data) {
                     $scope.routes = data.data.split("\n");
                     console.log($scope.routes);
