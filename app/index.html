@@ -48,9 +48,9 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Segurança - Portas Abertas" type="danger">
-                <button class="btn btn-success" class="row" ng-click="checkPorts()">Checar</button>
+                <button class="btn btn-success" ng-click="checkPorts()">Checar</button>
 
-                <table ng-show="portsOpen" style="width:100%" class="table-striped">
+                <table style="margin-top: 10px; width:100%" ng-show="portsOpen" class="table-striped">
                     <thead>
                     <tr>
                         <th>Porta</th>
@@ -77,12 +77,13 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Desempenho - Testar Rota" type="info">
-                <div class="row">
-                    <input class="form-control col-md-3" placeholder="Endereço destino.." type="text" ng-model="params.destAddress"/>
-                    <button class="btn btn-success" class="row" ng-click="testRoute()">Testar</button>
+                <div class="col-md-3">
+                    <label class="control-label" for="destAddress">Endereço Destino</label>
+                    <input class="form-control" id="destAddress" placeholder="Endereço destino.." type="text" ng-model="params.destAddress"/>
+                    <button style="margin-top: 10px" class="btn btn-success" ng-click="testRoute()">Testar</button>
                 </div>
 
-                <table ng-show="routes && routes.length > 0" style="width:100%" class="table-striped">
+                <table style="margin-top: 10px; width:100%" ng-show="routes && routes.length > 0" class="table-striped">
                     <thead>
                     <tr>
                         <th>Endereço</th>
@@ -121,8 +122,8 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Configuração - Interfaces de Rede" type="primary">
-                <button class="btn btn-success" class="row" ng-click="loadInterfaces()">Carregar dados</button>
-                <span ng-show="interfaces" class="row">Quantidade de interfaces {{interfaces.length}}</span>
+                <button class="btn btn-success" ng-click="loadInterfaces()">Carregar dados</button>
+                <span style="margin-top: 10px" ng-show="interfaces" class="row">Quantidade de interfaces {{interfaces.length}}</span>
                 <table ng-show="interfaces && interfaces.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
@@ -159,13 +160,14 @@
 
             <bootstrap-panel class="row" title="Configuração - Armazenamento" type="primary">
 
-                <div class="row">
-                    <input class="form-control col-md-3" placeholder="Alerta perigo" type="number" max="100" min="0" ng-model="params.dangerStoragePercentage"/>
+                <div class="col-md-4">
+                    <label class="control-label" for="dangerStoragePercentage">Limite aceitável de espaço usado (%)</label>
+                    <input id="dangerStoragePercentage" class="form-control col-md-3" placeholder="Alerta perigo" type="number" max="100" min="0" ng-model="params.dangerStoragePercentage"/>
+
+                    <button style="margin-top: 10px" class="btn btn-success row" ng-click="loadStorage()">Carregar dados</button>
                 </div>
 
-
-                <button class="btn btn-success" class="row" ng-click="loadStorage()">Carregar dados</button>
-                <table ng-show="storage && storage.length > 0" style="width:100%" class="table-striped">
+                <table style="margin-top: 10px; width:100%" ng-show="storage && storage.length > 0" class="table-striped">
                     <thead>
                     <tr>
                         <th>Descrição</th>
@@ -196,9 +198,9 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Configuração - Softwares Instalados" type="primary">
-                <button class="btn btn-success" class="row" ng-click="loadSwInstalled()">Carregar dados</button>
+                <button class="btn btn-success" ng-click="loadSwInstalled()">Carregar dados</button>
 
-                <div ng-show="swInstalled && swInstalled.length > 0">
+                <div style="margin-top: 10px" ng-show="swInstalled && swInstalled.length > 0">
                     <table style="width:100%" class="table-striped">
                         <thead>
                         <tr>
@@ -238,9 +240,17 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Configuração/Desempenho - Softwares Executando" type="primary">
-                <button class="btn btn-success" class="row" ng-click="loadSwRunning()">Carregar dados</button>
 
-                <div ng-show="swRunning && swRunning.length > 0">
+                <div class="col-md-4">
+                    <label class="control-label" for="dangerCpuUsage">Limite aceitável de uso de CPU (%)</label>
+                    <input id="dangerCpuUsage" class="form-control col-md-3" placeholder="Alerta CPU" type="number" max="100" min="0" ng-model="params.dangerCpuUsage"/>
+
+                    <label class="control-label" for="dangerMemUsage">Limite aceitável de uso memoria (MB)</label>
+                    <input id="dangerMemUsage" class="form-control col-md-3" placeholder="Alerta Memoria" type="number" min="0" ng-model="params.dangerMemUsage"/>
+                    <button style="margin-top: 10px" class="btn btn-success" ng-click="loadSwRunning()">Carregar dados</button>
+                </div>
+
+                <div style="margin-top: 10px" ng-show="swRunning && swRunning.length > 0">
                     <table style="width:100%" class="table-striped">
                         <thead>
                         <tr>

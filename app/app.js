@@ -34,7 +34,11 @@ angular.module('MyApp')
         $scope.params.destAddress = "";
         $scope.params.hostAddress = "127.0.0.1";
 
-        $scope.params.dangerStoragePercentage = 85;
+        //Default para info criticas
+        $scope.params.dangerStoragePercentage = 85; //% disponivel em uma storage >85%
+
+        $scope.params.dangerCpuUsage = 40; //uso de cpu por um processo > 40%
+        $scope.params.dangerMemUsage = 1000; //uso de memoria por um processo > 1000 (mb)
 
         /**
          * Testa rotas com mtr
@@ -187,16 +191,16 @@ angular.module('MyApp')
          * Pega os dados principais (do sistema)
          */
         function init() {
-            $scope.loading = true;
-            $http.get(URL + "api/data")
-                .then(function (data) {
-                    $scope.loading = false;
-                    $scope.data = data.data;
-                }, function (err) {
-                    $scope.loading = false;
-                    $scope.connected = false;
-                    alert("Não foi possível se conectar ao destino.");
-                });
+            // $scope.loading = true;
+            // $http.get(URL + "api/data")
+            //     .then(function (data) {
+            //         $scope.loading = false;
+            //         $scope.data = data.data;
+            //     }, function (err) {
+            //         $scope.loading = false;
+            //         $scope.connected = false;
+            //         alert("Não foi possível se conectar ao destino.");
+            //     });
         }
 
         /**
