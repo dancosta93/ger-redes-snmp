@@ -15,7 +15,6 @@ angular.module('MyApp')
 
         $scope.findValue = findValue;
 
-        $scope.hostAddress = "127.0.0.1";
 
         var SYSTEM_OIDS = {
             DESCR: '1.3.6.1.2.1.1.1.0',
@@ -29,8 +28,12 @@ angular.module('MyApp')
 
         $scope.data = undefined;
 
+        $scope.params = {};
+        $scope.params.destAddress = "";
+        $scope.params.hostAddress = "127.0.0.1";
+
         $scope.testRoute = function(){
-            $http.post(URL + "api/testRoute", {destAddress: $scope.destAddress})
+            $http.post(URL + "api/testRoute", {destAddress: $scope.params.destAddress})
                 .then(function (data) {
                     $scope.routes = data.data.split("\n");
                     console.log($scope.routes);
@@ -38,7 +41,7 @@ angular.module('MyApp')
         };
 
         $scope.checkPorts = function(){
-            $http.post(URL + "api/checkPorts", {hostAddress: $scope.hostAddress})
+            $http.post(URL + "api/checkPorts", {hostAddress: $scope.params.hostAddress})
                 .then(function (data) {
                     //as linhas com as portas abertas estao entre a linha que inicia com PORT(o header) e a que comeca com Device type
                     var firstSplit = data.data.split("PORT");
@@ -86,7 +89,7 @@ angular.module('MyApp')
         };
 
         $scope.connect = function () {
-            $http.post(URL + 'api/start', {hostAddress: $scope.hostAddress})
+            $http.post(URL + 'api/start', {hostAddress: $scope.params.hostAddress})
                 .then(function () {
                     $scope.connected = true;
                     init();

@@ -27,7 +27,7 @@
 
     <div class="well">
         <div ng-hide="connected">
-            <input type="text" ng-model="hostAddress"/>
+            <input type="text" ng-model="params.hostAddress"/>
             <button class="btn btn-info" ng-click="connect()">Conectar</button>
         </div>
 
@@ -62,7 +62,7 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Testar Rota" type="info">
-                <input type="text" ng-model="destAddress"/>
+                <input type="text" ng-model="params.destAddress"/>
                 <button class="btn btn-info" class="row" ng-click="testRoute()">Testar</button>
 
                 <table ng-show="routes" style="width:100%" class="table-striped">

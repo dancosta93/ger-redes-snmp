@@ -148,6 +148,12 @@ app.post('/api/checkPorts', function (req, res) {
  */
 app.post('/api/testRoute', function (req, res) {
     shellJs.exec('mtr -rw ' + req.body.destAddress, function(code, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        if(stderr){
+            res.status(400).send(stderr);
+            return;
+        }
         res.json(stdout);
     });
 });
