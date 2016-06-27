@@ -42,10 +42,10 @@
                 </div>
             </bootstrap-panel>
 
-            <bootstrap-panel class="row" title="Portas Abertas" type="warning">
+            <bootstrap-panel class="row" title="Portas Abertas" type="danger">
                 <button class="btn btn-info" class="row" ng-click="checkPorts()">Checar</button>
 
-                <table style="width:100%" class="table-striped">
+                <table ng-show="portsOpen" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
                         <th>Porta - Estado - Serviço</th>
@@ -53,6 +53,26 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="i in portsOpen">
+                        <td>
+                            {{i}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </bootstrap-panel>
+
+            <bootstrap-panel class="row" title="Testar Rota" type="info">
+                <input type="text" ng-model="destAddress"/>
+                <button class="btn btn-info" class="row" ng-click="testRoute()">Testar</button>
+
+                <table ng-show="routes" style="width:100%" class="table-striped">
+                    <thead>
+                    <tr>
+                        <th>Route</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in routes">
                         <td>
                             {{i}}
                         </td>

@@ -143,6 +143,14 @@ app.post('/api/checkPorts', function (req, res) {
     });
 });
 
+/**
+ * Testa a rota para um destino
+ */
+app.post('/api/testRoute', function (req, res) {
+    shellJs.exec('mtr -rw ' + req.body.destAddress, function(code, stdout, stderr) {
+        res.json(stdout);
+    });
+});
 
 /**
  * Informacao sobre armazenamento

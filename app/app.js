@@ -29,6 +29,14 @@ angular.module('MyApp')
 
         $scope.data = undefined;
 
+        $scope.testRoute = function(){
+            $http.post(URL + "api/testRoute", {hostAddress: $scope.destAddress})
+                .then(function (data) {
+                    $scope.routes = data.data.split("\n");
+                    console.log($scope.routes);
+                });
+        };
+
         $scope.checkPorts = function(){
             $http.post(URL + "api/checkPorts", {hostAddress: $scope.hostAddress})
                 .then(function (data) {
