@@ -276,10 +276,10 @@
                             <td>
                                 {{i.swRunStatus}}
                             </td>
-                            <td>
+                            <td ng-class="{'danger':i.perfCpu >= params.dangerCpuUsage}">
                                 {{i.perfCpu | number: 1}} %
                             </td>
-                            <td>
+                            <td ng-class="{'danger':i.perfMem >= params.dangerMemUsage}">
                                 {{i.perfMem | number: 2}}Mb
                             </td>
                         </tr>
