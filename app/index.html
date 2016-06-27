@@ -213,6 +213,7 @@
                         </tr>
                         </tbody>
                     </table>
+                    <span>Mostrando {{((ctrl.swInstalledPage - 1) * ctrl.perPage) + 1}}/{{ctrl.swInstalledPage * ctrl.perPage}} de {{swInstalled.length}} registros</span>
                     <nav>
                         <ul class="pagination">
                             <li ng-show="ctrl.swInstalledPage > 1"
@@ -230,40 +231,53 @@
             <bootstrap-panel class="row" title="Configuração/Desempenho - Softwares Executando" type="primary">
                 <button class="btn btn-success" class="row" ng-click="loadSwRunning()">Carregar dados</button>
 
-                <table ng-show="swRunning && swRunning.length > 0" style="width:100%" class="table-striped">
-                    <thead>
-                    <tr>
-                        <th style="width: 15%">Nome</th>
-                        <th style="width: 30%">Caminho</th>
-                        <th style="width: 15%">Tipo</th>
-                        <th style="width: 20%">Status</th>
-                        <th style="width: 10%">CPU</th>
-                        <th style="width: 10%">Memória</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="i in swRunning">
-                        <td>
-                            {{i.name}}
-                        </td>
-                        <td>
-                            {{i.swRunPath}}
-                        </td>
-                        <td>
-                            {{i.swRunType}}
-                        </td>
-                        <td>
-                            {{i.swRunStatus}}
-                        </td>
-                        <td>
-                            {{i.perfCpu | number: 1}} %
-                        </td>
-                        <td>
-                            {{i.perfMem | number: 2}}Mb
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div ng-show="swRunning && swRunning.length > 0">
+                    <table style="width:100%" class="table-striped">
+                        <thead>
+                        <tr>
+                            <th style="width: 15%">Nome</th>
+                            <th style="width: 30%">Caminho</th>
+                            <th style="width: 15%">Tipo</th>
+                            <th style="width: 20%">Status</th>
+                            <th style="width: 10%">CPU</th>
+                            <th style="width: 10%">Memória</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="i in swRunning | limitTo: ctrl.perPage : (ctrl.swRunningPage - 1) * ctrl.perPage">
+                            <td>
+                                {{i.name}}
+                            </td>
+                            <td>
+                                {{i.swRunPath}}
+                            </td>
+                            <td>
+                                {{i.swRunType}}
+                            </td>
+                            <td>
+                                {{i.swRunStatus}}
+                            </td>
+                            <td>
+                                {{i.perfCpu | number: 1}} %
+                            </td>
+                            <td>
+                                {{i.perfMem | number: 2}}Mb
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <span>Mostrando {{((ctrl.swRunningPage - 1) * ctrl.perPage) + 1}}/{{ctrl.swRunningPage * ctrl.perPage}} de {{swRunning.length}} registros</span>
+                    <nav>
+                        <ul class="pagination">
+                            <li ng-show="ctrl.swRunningPage > 1"
+                                ng-click="ctrl.swRunningPage = ctrl.swRunningPage -1"><a>
+                                Anterior</a></li>
+                            <li ng-show="swRunning.length > (ctrl.swRunningPage * ctrl.perPage)" ng-click="ctrl.swRunningPage = ctrl.swRunningPage + 1"><a>Próxima</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
 
                 <span ng-show="swRunningError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>

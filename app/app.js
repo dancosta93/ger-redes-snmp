@@ -122,7 +122,7 @@ angular.module('MyApp')
          * Carrega os dados de softwares instalados
          */
         $scope.loadSwInstalled = function(){
-            vm.swInstalledPage = 0;
+            vm.swInstalledPage = 1;
             $scope.loading = true;
             $scope.swInstalled = [];
             $http.get(URL + "api/swInstalled")
@@ -140,6 +140,7 @@ angular.module('MyApp')
          * Carrega os dados de Softwares Rodando
          */
         $scope.loadSwRunning = function(){
+            vm.swRunningPage = 1;
             $scope.loading = true;
             $scope.swRunning = [];
             $http.get(URL + "api/swRunning")
