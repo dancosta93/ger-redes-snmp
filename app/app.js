@@ -32,7 +32,11 @@ angular.module('MyApp')
         $scope.params.destAddress = "";
         $scope.params.hostAddress = "127.0.0.1";
 
+        /**
+         * Testa rotas com mtr
+         */
         $scope.testRoute = function(){
+            $scope.loading = true;
             $scope.routeError = false;
             $scope.routes = [];
             $http.post(URL + "api/testRoute", {destAddress: $scope.params.destAddress})
@@ -42,13 +46,19 @@ angular.module('MyApp')
                     $scope.routes = data.data.split("\n");
                     $scope.routes.shift();
                     $scope.routes.shift();
+                    $scope.loading = false;
                 },function(err){
+                    $scope.loading = false;
                     $scope.routeError = true;
                     console.log(err);
                 });
         };
 
+        /**
+         * Checa portas abertas com nmap
+         */
         $scope.checkPorts = function(){
+            $scope.loading = true;
             $scope.portsOpen = [];
             $http.post(URL + "api/checkPorts", {hostAddress: $scope.params.hostAddress})
                 .then(function (data) {
@@ -64,67 +74,100 @@ angular.module('MyApp')
                     thirdSplit.shift();
                     thirdSplit.pop();
                     $scope.portsOpen = thirdSplit;
+                    $scope.loading = false;
                 },function(err){
                     $scope.portsError = true;
+                    $scope.loading = false;
                     console.log(err);
                 });
         };
 
+        /**
+         * Carrega os dados de interfaces de rede
+         */
         $scope.loadInterfaces = function(){
+            $scope.loading = true;
             $scope.interfaces = [];
             $http.get(URL + "api/interfaces")
                 .then(function (data) {
+                    $scope.loading = false;
                     $scope.interfaces = data.data;
                 },function(err){
                     $scope.interfaceError = true;
+                    $scope.loading = false;
                     console.log(err);
                 });
         };
 
+        /**
+         * Carrega os dados de armazenamento
+         */
         $scope.loadStorage = function(){
+            $scope.loading = true;
             $scope.storage = [];
             $http.get(URL + "api/storage")
                 .then(function (data) {
-                    console.log(data);
+                    $scope.loading = false;
                     $scope.storage = data.data;
                 },function(err){
                     $scope.storageError = true;
+                    $scope.loading = false;
                     console.log(err);
                 });
         };
 
+        /**
+         * Carrega os dados de softwares instalados
+         */
         $scope.loadSwInstalled = function(){
+            $scope.loading = true;
             $scope.swInstalled = [];
             $http.get(URL + "api/swInstalled")
                 .then(function (data) {
-                    console.log(data);
+                    $scope.loading = false;
                     $scope.swInstalled = data.data;
                 },function(err){
                     $scope.swInstalledError = true;
+                    $scope.loading = false;
                     console.log(err);
                 });
         };
 
+        /**
+         * Carrega os dados de Softwares Rodando
+         */
         $scope.loadSwRunning = function(){
+            $scope.loading = true;
             $scope.swRunning = [];
             $http.get(URL + "api/swRunning")
                 .then(function (data) {
-                    console.log(data);
+                    $scope.loading = false;
                     $scope.swRunning = data.data;
                 },function(err){
                     $scope.swRunningError = true;
+                    $scope.loading = false;
                     console.log(err);
                 });
         };
 
+        /**
+         * Inicializa os parametros iniciais para realizar os comandos SNMP
+         */
         $scope.connect = function () {
+            $scope.loading = true;
             $http.post(URL + 'api/start', {hostAddress: $scope.params.hostAddress})
                 .then(function () {
+                    $scope.loading = false;
                     $scope.connected = true;
                     init();
                 });
         };
 
+        /**
+         * Converte uma data retornada num snmptable (temos na hrSWInstalled)
+         * @param date
+         * @returns {string}
+         */
         $scope.parseDate = function(date){
             var year = date[1];
             var month = date[2];
@@ -133,14 +176,24 @@ angular.module('MyApp')
             return day + "/" + month + "/" + year;
         };
 
+        /**
+         * Funcao rodada ao iniciar
+         * Pega os dados principais (do sistema)
+         */
         function init() {
+            $scope.loading = true;
             $http.get(URL + "api/data")
                 .then(function (data) {
-                    console.log(data);
+                    $scope.loading = false;
                     $scope.data = data.data;
                 });
         }
 
+        /**
+         * Acha o valor pela OID no array retornado de dados do system
+         * @param oid
+         * @returns {*}
+         */
         function findValue(oid) {
             if (!$scope.data) return "";
             var result = _.find($scope.data, function (item) {

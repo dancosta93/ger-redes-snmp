@@ -6,3 +6,29 @@
 .error{
     color: red;
 }
+
+.overlay-submit {
+    z-index: 500;
+    background-color: white;
+    filter: alpha(opacity=50); /* IE */
+    opacity: 0.5; /* Safari, Opera */
+    -moz-opacity: 0.50; /* FireFox */
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.submitting-loading {
+    z-index: 500;
+    margin: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -26px;
+    margin-left: -26px;
+    content: url("images/spinner.gif");
+}
