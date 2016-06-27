@@ -40,7 +40,8 @@ angular.module('MyApp')
                     data.data = data.data.replace(/ +(?= )/g,''); //transforma todos os espacos multiplos em apenas um espaco
                     //descarta os 2 primeiros
                     $scope.routes = data.data.split("\n");
-                    $scope.routes.shift().shift();
+                    $scope.routes.shift();
+                    $scope.routes.shift();
                 },function(err){
                     $scope.routeError = true;
                     console.log(err);
@@ -70,6 +71,7 @@ angular.module('MyApp')
         };
 
         $scope.loadInterfaces = function(){
+            $scope.interfaces = [];
             $http.get(URL + "api/interfaces")
                 .then(function (data) {
                     $scope.interfaces = data.data;
@@ -80,6 +82,7 @@ angular.module('MyApp')
         };
 
         $scope.loadStorage = function(){
+            $scope.storage = [];
             $http.get(URL + "api/storage")
                 .then(function (data) {
                     console.log(data);
@@ -91,6 +94,7 @@ angular.module('MyApp')
         };
 
         $scope.loadSwInstalled = function(){
+            $scope.swInstalled = [];
             $http.get(URL + "api/swInstalled")
                 .then(function (data) {
                     console.log(data);
@@ -102,6 +106,7 @@ angular.module('MyApp')
         };
 
         $scope.loadSwRunning = function(){
+            $scope.swRunning = [];
             $http.get(URL + "api/swRunning")
                 .then(function (data) {
                     console.log(data);
@@ -117,9 +122,15 @@ angular.module('MyApp')
                 .then(function () {
                     $scope.connected = true;
                     init();
-                },function(err){
-                    alert("Nao foi possivel conectar.");
                 });
+        };
+
+        $scope.parseDate = function(date){
+            var year = date[1];
+            var month = date[2];
+            var day = date[3];
+
+            return day + "/" + month + "/" + year;
         };
 
         function init() {

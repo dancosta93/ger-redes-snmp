@@ -115,7 +115,7 @@
 
             <bootstrap-panel class="row" title="Interfaces de Rede" type="primary">
                 <button class="btn btn-info" class="row" ng-click="loadInterfaces()">Carregar dados</button>
-                <span class="row">Quantidade de interfaces {{interfaces.length}}</span>
+                <span ng-show="interfaces" class="row">Quantidade de interfaces {{interfaces.length}}</span>
                 <table ng-show="interfaces && interfaces.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
@@ -191,7 +191,7 @@
                             {{i.name}}
                         </td>
                         <td>
-                            {{i.installDate}}
+                            {{parseDate(i.installDate)}}
                         </td>
                         <td>
                             {{i.type}}
@@ -209,12 +209,12 @@
                 <table ng-show="swRunning && swRunning.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Caminho</th>
-                        <th>Tipo</th>
-                        <th>Status</th>
-                        <th>CPU</th>
-                        <th>Memória</th>
+                        <th style="width: 15%">Nome</th>
+                        <th style="width: 30%">Caminho</th>
+                        <th style="width: 15%">Tipo</th>
+                        <th style="width: 20%">Status</th>
+                        <th style="width: 10%">CPU</th>
+                        <th style="width: 10%">Memória</th>
                     </tr>
                     </thead>
                     <tbody>
