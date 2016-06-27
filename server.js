@@ -213,11 +213,11 @@ app.get('/api/swInstalled', function (req, res) {
                 if (item[2]) {
                     obj.name = decoder.write(item[2]);
                 }
-                if(item[4]){
+                if (item[4]) {
                     obj.type = TYPES[item[4] - 1];
                 }
 
-                if(item[5]){
+                if (item[5]) {
                     obj.installDate = item[5];
                 }
                 response.push(obj);
@@ -253,32 +253,62 @@ app.get('/api/swRunning', function (req, res) {
         } else {
             var response = [];
 
-            _.forEach(result, function (item) {
-                var obj = {};
-                //.2 eh o hrSWRunName, precisamos fazer o parse
-                if (item[2]) {
-                    obj.name = decoder.write(item[2]);
-                }
+            var RUN_TYPE = ["Desconhecido", "Sistema Operacional", "Driver de dispositivo", "Aplicação"];
 
-                obj.swId = item[3];
+            var RUN_STATUS = ["Executando", "Executável (esperando recurso)", "Não Executável (carregado, mas esperando por evento)", "Inválido"];
 
-                if (item[4]) {
-                    obj.swRunPath = decoder.write(item[4]);
-                }
+            try {
+                _.forEach(result, function (item) {
+                    var obj = {};
 
-                if (item[5]) {
-                    obj.swRunParameters = decoder.write(item[5]);
-                }
-                if (item[6]) {
-                    obj.swRunType = decoder.write(item[6]);
-                }
-                if (item[7]) {
-                    obj.swRunStatus = decoder.write(item[7]);
-                }
-                response.push(obj);
-            });
+                    obj.index = item[1]; //vamos usar o index pra relacionar com a performance depois
 
-            res.json(response);
+                    //.2 eh o hrSWRunName, precisamos fazer o parse
+                    if (item[2]) {
+                        obj.name = decoder.write(item[2]);
+                    }
+
+                    if (item[4]) {
+                        obj.swRunPath = decoder.write(item[4]);
+                    }
+
+                    if (item[5]) {
+                        obj.swRunParameters = decoder.write(item[5]);
+                    }
+                    if (item[6]) {
+                        obj.swRunType = RUN_TYPE[item[6] - 1];
+                    }
+                    if (item[7]) {
+                        obj.swRunStatus = RUN_STATUS[item[7] - 1];
+                    }
+                    response.push(obj);
+                });
+
+                session.table(HR_SW_RUN_PERF_TABLE, 20, function(err, result){
+                    if (err) {
+                        res.status(400).json(err);
+                        return;
+                    }
+                    var keys = Object.keys(result); //para relacionar com os indexes da table anterior, precisamos das keys
+                    for (var i = 0; i < keys.length; i++) {
+                        var key = keys[i];
+                        var perfData = result[key];
+                        //No array criado anteriormente com o swRunning, procuramos nele pelo index
+                        var swRunning = _.find(response, function(i){
+                            return i.index == key;
+                        });
+                        if(swRunning){
+                            swRunning.perfCpu = perfData[1] / 1000; //TODO como converte isso
+                            swRunning.perfMem = perfData[2] / 1024; //a info esta em kb converte pra mb
+                        }
+                    }
+                    res.json(response);
+                });
+            } catch (ex) {
+                console.log(ex);
+                res.status(400).json(ex);
+                return;
+            }
         }
     });
 });

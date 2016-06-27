@@ -33,7 +33,7 @@
 
         <div ng-show="connected">
             <bootstrap-panel class="row" title="Dados" type="primary">
-                <div class="data-block col-md-6">
+                <div class="data-block">
                     <span>Descr: {{findValue(SYSTEM_OIDS.DESCR)}}</span>
                     <span>Contato: {{findValue(SYSTEM_OIDS.CONTACT)}}</span>
                     <span>Usuario: {{findValue(SYSTEM_OIDS.USERNAME)}}</span>
@@ -86,10 +86,10 @@
                             {{i.descr}}
                         </td>
                         <td>
-                            {{i.storageSize | number: 2}} MB
+                            {{i.storageSize | number: 2}} Mb
                         </td>
                         <td>
-                            {{i.storageUsed | number: 2}} MB
+                            {{i.storageUsed | number: 2}} Mb
                         </td>
                         <td>
                             {{(i.storageUsed / i.storageSize) * 100 | number : 1}}%
@@ -136,6 +136,8 @@
                         <th>Caminho</th>
                         <th>Tipo</th>
                         <th>Status</th>
+                        <th>CPU</th>
+                        <th>Memória</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -151,6 +153,12 @@
                         </td>
                         <td>
                             {{i.swRunStatus}}
+                        </td>
+                        <td>
+                            {{i.perfCpu | number: 1}} %
+                        </td>
+                        <td>
+                            {{i.perfMem | number: 2}}Mb
                         </td>
                     </tr>
                     </tbody>
