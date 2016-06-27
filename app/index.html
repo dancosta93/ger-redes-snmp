@@ -28,7 +28,7 @@
     <div class="well">
         <div ng-hide="connected">
             <input type="text" ng-model="hostAddress"/>
-            <button ng-click="connect()">Conectar</button>
+            <button class="btn btn-info" ng-click="connect()">Conectar</button>
         </div>
 
         <div ng-show="connected">
@@ -43,7 +43,7 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Interfaces de Rede" type="primary">
-                <button class="row" ng-click="loadInterfaces()">Carregar Interfaces</button>
+                <button class="btn btn-info" class="row" ng-click="loadInterfaces()">Carregar dados</button>
                 <span class="row">Quantidade de interfaces {{interfaces.length}}</span>
                 <table style="width:100%" class="table-striped">
                     <thead>
@@ -70,16 +70,91 @@
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Armazenamento" type="primary">
-                <button class="row" ng-click="loadStorage()">Carregar Interfaces</button>
-
+                <button class="btn btn-info" class="row" ng-click="loadStorage()">Carregar dados</button>
+                <table style="width:100%" class="table-striped">
+                    <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Tamanho</th>
+                        <th>Espaço Livre</th>
+                        <th>Espaço Usado</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in storage">
+                        <td>
+                            {{i.descr}}
+                        </td>
+                        <td>
+                            {{i.storageSize | number: 2}} MB
+                        </td>
+                        <td>
+                            {{i.storageUsed | number: 2}} MB
+                        </td>
+                        <td>
+                            {{(i.storageUsed / i.storageSize) * 100 | number : 1}}%
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Softwares Instalados" type="primary">
-                <button class="row" ng-click="loadSwInstalled()">Carregar Interfaces</button>
+                <button class="btn btn-info" class="row" ng-click="loadSwInstalled()">Carregar dados</button>
+
+                <table style="width:100%" class="table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Data de Instalação</th>
+                        <th>Tipo</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in swInstalled">
+                        <td>
+                            {{i.name}}
+                        </td>
+                        <td>
+                            {{i.installDate}}
+                        </td>
+                        <td>
+                            {{i.type}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </bootstrap-panel>
 
             <bootstrap-panel class="row" title="Softwares Executando" type="primary">
-                <button class="row" ng-click="loadSwRunning()">Carregar Interfaces</button>
+                <button class="btn btn-info" class="row" ng-click="loadSwRunning()">Carregar dados</button>
+
+                <table style="width:100%" class="table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Caminho</th>
+                        <th>Tipo</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in swRunning">
+                        <td>
+                            {{i.name}}
+                        </td>
+                        <td>
+                            {{i.swRunPath}}
+                        </td>
+                        <td>
+                            {{i.swRunType}}
+                        </td>
+                        <td>
+                            {{i.swRunStatus}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </bootstrap-panel>
         </div>
     </div>
