@@ -66,6 +66,15 @@ app.get('/api/interfaces', function (req, res) {
                 if (item[2])
                     obj.descr = decoder.write(item[2]);
 
+                obj.bytesReceived = item[10];
+                obj.unicastReceived = item[11];
+                obj.notUnicastReceived = item[12];
+                obj.unkown = item[15];
+
+                obj.bytesSent = item[16];
+                obj.unicastSent = item[17];
+                obj.notUnicastSent = item[18];
+
                 //MTU é o quarto item, e é integer
                 if (item[4])
                     obj.mtu = item[4];
