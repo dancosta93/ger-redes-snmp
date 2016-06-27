@@ -13,6 +13,8 @@ angular.module('MyApp')
 
         var vm = this;
 
+        vm.perPage = 20;
+
         $scope.findValue = findValue;
 
 
@@ -120,6 +122,7 @@ angular.module('MyApp')
          * Carrega os dados de softwares instalados
          */
         $scope.loadSwInstalled = function(){
+            vm.swInstalledPage = 0;
             $scope.loading = true;
             $scope.swInstalled = [];
             $http.get(URL + "api/swInstalled")

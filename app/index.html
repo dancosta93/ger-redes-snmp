@@ -32,7 +32,7 @@
     <div class="well">
         <div ng-hide="connected">
             <input type="text" ng-model="params.hostAddress"/>
-            <button class="btn btn-info" ng-click="connect()">Conectar</button>
+            <button class="btn btn-success" ng-click="connect()">Conectar</button>
         </div>
 
         <div ng-show="connected">
@@ -47,8 +47,8 @@
                 </div>
             </bootstrap-panel>
 
-            <bootstrap-panel class="row" title="Portas Abertas" type="danger">
-                <button class="btn btn-info" class="row" ng-click="checkPorts()">Checar</button>
+            <bootstrap-panel class="row" title="Segurança - Portas Abertas" type="danger">
+                <button class="btn btn-success" class="row" ng-click="checkPorts()">Checar</button>
 
                 <table ng-show="portsOpen" style="width:100%" class="table-striped">
                     <thead>
@@ -76,9 +76,9 @@
                 <span ng-show="portsError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
-            <bootstrap-panel class="row" title="Testar Rota" type="info">
+            <bootstrap-panel class="row" title="Desempenho - Testar Rota" type="info">
                 <input type="text" ng-model="params.destAddress"/>
-                <button class="btn btn-info" class="row" ng-click="testRoute()">Testar</button>
+                <button class="btn btn-success" class="row" ng-click="testRoute()">Testar</button>
 
                 <table ng-show="routes && routes.length > 0" style="width:100%" class="table-striped">
                     <thead>
@@ -118,8 +118,8 @@
                 <span ng-show="routeError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
-            <bootstrap-panel class="row" title="Interfaces de Rede" type="primary">
-                <button class="btn btn-info" class="row" ng-click="loadInterfaces()">Carregar dados</button>
+            <bootstrap-panel class="row" title="Configuração - Interfaces de Rede" type="primary">
+                <button class="btn btn-success" class="row" ng-click="loadInterfaces()">Carregar dados</button>
                 <span ng-show="interfaces" class="row">Quantidade de interfaces {{interfaces.length}}</span>
                 <table ng-show="interfaces && interfaces.length > 0" style="width:100%" class="table-striped">
                     <thead>
@@ -155,8 +155,8 @@
                 <span ng-show="interfaceError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
-            <bootstrap-panel class="row" title="Armazenamento" type="primary">
-                <button class="btn btn-info" class="row" ng-click="loadStorage()">Carregar dados</button>
+            <bootstrap-panel class="row" title="Configuração - Armazenamento" type="primary">
+                <button class="btn btn-success" class="row" ng-click="loadStorage()">Carregar dados</button>
                 <table ng-show="storage && storage.length > 0" style="width:100%" class="table-striped">
                     <thead>
                     <tr>
@@ -187,37 +187,48 @@
                 <span ng-show="storageError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
-            <bootstrap-panel class="row" title="Softwares Instalados" type="primary">
-                <button class="btn btn-info" class="row" ng-click="loadSwInstalled()">Carregar dados</button>
+            <bootstrap-panel class="row" title="Configuração - Softwares Instalados" type="primary">
+                <button class="btn btn-success" class="row" ng-click="loadSwInstalled()">Carregar dados</button>
 
-                <table ng-show="swInstalled && swInstalled.length > 0" style="width:100%" class="table-striped">
-                    <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Data de Instalação</th>
-                        <th>Tipo</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="i in swInstalled">
-                        <td>
-                            {{i.name}}
-                        </td>
-                        <td>
-                            {{parseDate(i.installDate)}}
-                        </td>
-                        <td>
-                            {{i.type}}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div ng-show="swInstalled && swInstalled.length > 0">
+                    <table style="width:100%" class="table-striped">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Data de Instalação</th>
+                            <th>Tipo</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="i in swInstalled | limitTo: ctrl.perPage : (ctrl.swInstalledPage - 1) * ctrl.perPage">
+                            <td>
+                                {{i.name}}
+                            </td>
+                            <td>
+                                {{parseDate(i.installDate)}}
+                            </td>
+                            <td>
+                                {{i.type}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <nav>
+                        <ul class="pagination">
+                            <li ng-show="ctrl.swInstalledPage > 1"
+                                ng-click="ctrl.swInstalledPage = ctrl.swInstalledPage -1"><a>
+                                Anterior</a></li>
+                            <li ng-show="swInstalled.length > (ctrl.swInstalledPage * ctrl.perPage)" ng-click="ctrl.swInstalledPage = ctrl.swInstalledPage + 1"><a>Próxima</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
 
                 <span ng-show="swInstalledError" class="error">Ocorreu um erro na consulta</span>
             </bootstrap-panel>
 
-            <bootstrap-panel class="row" title="Softwares Executando" type="primary">
-                <button class="btn btn-info" class="row" ng-click="loadSwRunning()">Carregar dados</button>
+            <bootstrap-panel class="row" title="Configuração/Desempenho - Softwares Executando" type="primary">
+                <button class="btn btn-success" class="row" ng-click="loadSwRunning()">Carregar dados</button>
 
                 <table ng-show="swRunning && swRunning.length > 0" style="width:100%" class="table-striped">
                     <thead>
