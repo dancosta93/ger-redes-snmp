@@ -128,6 +128,13 @@ app.get('/api/data', function (req, res) {
 
 
 /**
+ * Informacao sobre a rede
+ */
+app.get('/api/network', function(req,res){
+
+});
+
+/**
  * Informacao sobre memoria
  */
 app.get('/api/memory', function(req,res){
@@ -156,7 +163,22 @@ app.get('/api/storage', function(req,res){
             res.status(400).json(err);
             return;
         }else{
-            res.json(result);
+            var response = [];
+
+            _.forEach(result, function(item){
+                var obj = {};
+                obj.type = item[2];
+                //.3 eh o hrStorageDescr, precisamos fazer o parse
+                if(item[3]){
+                    obj.descr = decoder.write(item[3]);
+                }
+                obj.allocationUnits = item[4];
+                obj.storageSize = item[5];
+                obj.storageUsed = item[6];
+                response.push(obj);
+            });
+
+            res.json(response);
         }
     });
 });
