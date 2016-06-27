@@ -191,16 +191,16 @@ angular.module('MyApp')
          * Pega os dados principais (do sistema)
          */
         function init() {
-            // $scope.loading = true;
-            // $http.get(URL + "api/data")
-            //     .then(function (data) {
-            //         $scope.loading = false;
-            //         $scope.data = data.data;
-            //     }, function (err) {
-            //         $scope.loading = false;
-            //         $scope.connected = false;
-            //         alert("Não foi possível se conectar ao destino.");
-            //     });
+            $scope.loading = true;
+            $http.get(URL + "api/data")
+                .then(function (data) {
+                    $scope.loading = false;
+                    $scope.data = data.data;
+                }, function (err) {
+                    $scope.loading = false;
+                    $scope.connected = false;
+                    alert("Não foi possível se conectar ao destino.");
+                });
         }
 
         /**
